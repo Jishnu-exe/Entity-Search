@@ -1,0 +1,34 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: image_search_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: imagesearch
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: image_search_backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/imagesearch
+      CORS_ORIGINS: http://localhost:5173
+      IMAGE_ROOT: /data/images
+      IMAGE_BASE_URL: http://localhost:8000/images
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ../backend:/app
+      - ../data:/data
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  db_data:
