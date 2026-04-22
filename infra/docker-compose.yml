@@ -13,8 +13,8 @@ services:
 
   backend:
     build:
-      context: ../backend
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: backend/Dockerfile
     container_name: image_search_backend
     environment:
       DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/imagesearch
