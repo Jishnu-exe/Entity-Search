@@ -33,7 +33,7 @@ data/             Local datasets (not committed)
 ## Quick Start (recommended)
 ### 1) Start Postgres with pgvector
 ```
-cd <repo-root>
+cd Entity-Search
 docker compose -f infra/docker-compose.yml up -d db
 ```
 
@@ -48,7 +48,7 @@ pip install -r requirements.txt
 ### 3) Set runtime environment variables
 ```
 $env:DATABASE_URL="postgresql+psycopg://postgres:postgres@localhost:5432/imagesearch"
-$env:IMAGE_ROOT="<repo-root>/data/images"
+$env:IMAGE_ROOT="Entity-Search/data/images"
 $env:IMAGE_BASE_URL="http://localhost:8000/images"
 $env:CORS_ORIGINS="http://localhost:5173"
 ```
@@ -59,7 +59,7 @@ Place your dataset under `data/images` and create `data/products.csv`.
 If your dataset needs a CSV conversion step, run a converter script that outputs `data/products.csv`.
 Example:
 ```
-cd <repo-root>/backend
+cd Entity-Search/backend
 python -m app.prepare_dataset --csv ../data/source.csv --image-root ../data/images --output ../data/products.csv
 ```
 
@@ -70,13 +70,13 @@ python -m app.ingest --csv ../data/products.csv --image-root ../data/images
 
 ### 5) Run the backend
 ```
-cd <repo-root>/backend
+cd Entity-Search/backend
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### 6) Run the frontend
 ```
-cd <repo-root>/frontend
+cd Entity-Search/frontend
 npm install
 npm run dev
 ```
